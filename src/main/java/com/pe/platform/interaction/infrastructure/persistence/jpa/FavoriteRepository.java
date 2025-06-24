@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
     List<Favorite> findByProfileId(long profileId);
-    Optional<Favorite> findByProfileIdAndVehicleId(long profileId, int vehicleId);
+    Optional<Favorite> findByProfileIdAndVehicleId(long profileId, Long vehicleId);
 }

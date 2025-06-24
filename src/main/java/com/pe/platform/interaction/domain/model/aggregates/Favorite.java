@@ -1,10 +1,15 @@
 package com.pe.platform.interaction.domain.model.aggregates;
 
-import com.pe.platform.vehicle.domain.model.aggregates.Vehicle; // Si tienes el vehículo en otro módulo
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,9 +21,8 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicle_id", nullable = false)
-    private Vehicle vehicle;
+    @Column(name = "vehicle_id", nullable = false)
+    private Long vehicleId;
 
     @Column(nullable = false)
     private long profileId;
@@ -30,8 +34,8 @@ public class Favorite {
 
     }
 
-    public Favorite(Vehicle vehicle, long profileId) {
-        this.vehicle = vehicle;
+    public Favorite(Long vehicleId, long profileId) {
+        this.vehicleId = vehicleId;
         this.profileId = profileId;
         this.createdAt = LocalDateTime.now();
     }

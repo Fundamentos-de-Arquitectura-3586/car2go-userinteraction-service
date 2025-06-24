@@ -42,11 +42,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt = authHeader.substring(7);
         Claims claims;
         try {
-            claims = Jwts.parserBuilder()
-                    .setSigningKey(key)
+            claims = Jwts.parser()
+                    .verifyWith(key)
                     .build()
-                    .parseClaimsJws(jwt)
-                    .getBody();
+                    .parseSignedClaims(jwt)
+                    .getPayload();
         } catch (Exception e) {
             // Firma inválida o token corrupto
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

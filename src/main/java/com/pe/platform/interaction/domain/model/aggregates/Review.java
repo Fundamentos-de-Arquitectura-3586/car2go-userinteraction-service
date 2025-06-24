@@ -1,75 +1,34 @@
 package com.pe.platform.interaction.domain.model.aggregates;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pe.platform.vehicle.domain.model.aggregates.Vehicle;
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.pe.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
-public class Review {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "vehicle_id", nullable = false)
-    @JsonIgnore
-    private Vehicle vehicle;
-
+@Table(name = "reviews")
+public class Review extends AuditableAbstractAggregateRoot<Review> {
     @Column(nullable = false)
-    private String reviewedBy;
-
+    private Long vehicleId;
     @Column(nullable = false)
-    private String notes;
-
+    private Long profileId;
     @Column(nullable = false)
-    private LocalDateTime reviewDate;
+    private int rating;
+    @Column(length = 500)
+    private String comment;
 
-    protected Review() {}
-
-    public Review(Vehicle vehicle, String reviewedBy, String notes) {
-        this.vehicle = vehicle;
-        this.reviewedBy = reviewedBy;
-        this.notes = notes;
-        this.reviewDate = LocalDateTime.now();
+    public Review() {
     }
 
-    public Long getId() {
-        return id;
+    public Review(Long vehicleId, Long profileId, int rating, String comment) {
+        this.vehicleId = vehicleId;
+        this.profileId = profileId;
+        this.rating = rating;
+        this.comment = comment;
     }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
-    public String getReviewedBy() {
-        return reviewedBy;
-    }
-
-    public void setReviewedBy(String reviewedBy) {
-        this.reviewedBy = reviewedBy;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public LocalDateTime getReviewDate() {
-        return reviewDate;
-    }
-
-    public void setReviewDate(LocalDateTime reviewDate) {
-        this.reviewDate = reviewDate;
-    }
-
-
 }

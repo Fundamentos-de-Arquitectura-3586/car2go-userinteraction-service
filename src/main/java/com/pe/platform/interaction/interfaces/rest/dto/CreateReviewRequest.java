@@ -1,7 +1,7 @@
 package com.pe.platform.interaction.interfaces.rest.dto;  // Ajusta este paquete según la ubicación que elijas.
 
 public class CreateReviewRequest {
-    private int vehicleId;
+    private Long vehicleId;
     private String notes;
     private boolean isApproved;
 
@@ -9,11 +9,11 @@ public class CreateReviewRequest {
     public CreateReviewRequest() {}
 
     // Getters y Setters
-    public int getVehicleId() {
+    public Long getVehicleId() {
         return vehicleId;
     }
 
-    public void setVehicleId(int vehicleId) {
+    public void setVehicleId(Long vehicleId) {
         this.vehicleId = vehicleId;
     }
 
