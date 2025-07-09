@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -29,10 +31,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("🔥 Filtro JWT interceptó la petición");
+        System.out.println("Filtro JWT interceptó la petición");
 
         final String authHeader = request.getHeader("Authorization");
-        System.out.println("🛂 Authorization header: " + authHeader);
+        System.out.println("Authorization header: " + authHeader);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -71,6 +73,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 userId, null, Collections.emptyList()
         );
         authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+        // Guardar el JWT en el contexto de la petición para uso posterior
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        attributes.getRequest().setAttribute("JWT_TOKEN", jwt);
 
         SecurityContextHolder.getContext().setAuthentication(authToken);
         filterChain.doFilter(request, response);

@@ -2,6 +2,7 @@ package com.pe.platform.shared.domain.model.aggregates;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -17,6 +18,7 @@ import java.util.Date;
  */
 
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public class AuditableAbstractAggregateRoot<T extends AbstractAggregateRoot<T>> extends AbstractAggregateRoot<T> {

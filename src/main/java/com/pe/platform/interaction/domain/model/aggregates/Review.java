@@ -23,6 +23,7 @@ public class Review extends AuditableAbstractAggregateRoot<Review> {
     private String comment;
 
     public Review() {
+
     }
 
     public Review(Long vehicleId, Long profileId, int rating, String comment) {
@@ -30,5 +31,9 @@ public class Review extends AuditableAbstractAggregateRoot<Review> {
         this.profileId = profileId;
         this.rating = rating;
         this.comment = comment;
+        // Inicializar campos de auditoría temporalmente hasta que JPA Auditing esté configurado
+        java.util.Date now = new java.util.Date();
+        this.setCreatedAt(now);
+        this.setUpdatedAt(now);
     }
 }

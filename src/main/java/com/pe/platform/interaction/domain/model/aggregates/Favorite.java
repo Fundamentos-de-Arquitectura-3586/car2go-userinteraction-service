@@ -32,6 +32,9 @@ public class Favorite {
 
     public Favorite() {
 
+        this.createdAt = LocalDateTime.now();
+        
+
     }
 
     public Favorite(Long vehicleId, long profileId) {
